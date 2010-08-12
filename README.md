@@ -20,10 +20,10 @@ What resources are used in this project?
 
 This project would not be possible without two important open source applications, both available on GitHub:
 
-- [jQTouch] (http://github.com/senchalabs/jQTouch) - this is used to create the iPhone style interface that is so 
+- [jQTouch](http://github.com/senchalabs/jQTouch) - this is used to create the iPhone style interface that is so 
 familiar to developers today. jQTouch is a really great project and I would encourage everyone to use it. It's brilliant 
 whether you want to create web applications or even native applications using...
-- [PhoneGap] (http://github.com/sintaxi/phonegap) - this is used to convert the web application into a native iPhone 
+- [PhoneGap](http://github.com/sintaxi/phonegap) - this is used to convert the web application into a native iPhone 
 application to be submitted to the App Store. This is a truly amazing open source project and I thoroughly recommend it 
 for anyone who wants to make iPhone apps. It is also compatible with other platforms like Palm WebOS, Blackberry and 
 Android.
@@ -42,9 +42,9 @@ properly. If you can make it work, please feel free to build it and upload it to
 Credits
 --------
 
-Created by [Tim Rogers] (http://www.tim-rogers.co.uk). If you'd like a similar app made, feel free to contact by iPhone 
-app development studio, [Carnochan Rogers] (http://www.carnochanrogers.co.uk).
-With special thanks to [Multizone Ltd] (http://www.multizone.co.uk) and Angus Fox for organising the event and for 
+Created by [Tim Rogers](http://www.tim-rogers.co.uk). If you'd like a similar app made, feel free to contact by iPhone 
+app development studio, [Carnochan Rogers](http://www.carnochanrogers.co.uk).
+With special thanks to [Multizone Ltd](http://www.multizone.co.uk) and Angus Fox for organising the event and for 
 providing the iPhone developer account on which this app will hopefully eventually be released, once it is approved.
 
 (c) 2010 Tim Rogers
