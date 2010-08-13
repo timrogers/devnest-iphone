@@ -27,6 +27,7 @@ whether you want to create web applications or even native applications using...
 application to be submitted to the App Store. This is a truly amazing open source project and I thoroughly recommend it 
 for anyone who wants to make iPhone apps. It is also compatible with other platforms like Palm WebOS, Blackberry and 
 Android. A version of the project for Android is also available on GitHub [here](http://github.com/timrogers/devnest-android).
+
 What should I do with this?
 ---------------------------
 
@@ -35,6 +36,21 @@ here. I would wholeheartedly welcome people improve the DevNest project, as this
 wanted to make something and then get it out to the online community to enjoy.
 
 I'd also quite like to see versions of the app for other platforms on which it is not currently available, like WebOS, Blackberry and Symbian. Please feel free to take the HTML assets and compile them with PhoneGap to these platforms and just upload them to the relevant stores!
+
+Plans for Version 1.1
+----------------------
+
+I'm not really sure where I want to go with this application now since it is meant to be simple and function. I do, however, have a few relevant ideas that I might put in.
+
+- Use jQTouch form functionality to allow people to submit themselves as speakers (would need a backend, written in PHP by myself perhaps)
+- Implement the [PhoneGap ChildBrowser plugin](http://github.com/purplecabbage/PhoneGap-Plugins/tree/master/ChildBrowser/iPhone/).
+- Perhaps implement push notifications to notify people of news regarding the events.
+
+__Other than these ideas, we will have to see what Apple says to the currently submitted version. I will not be surprised if they decide to reject it for some reason, in which case I may need to make other changes.__
+
+If you have any ideas, feel free to make them yourselves and then send me a pull request, or contact me through GitHub.
+
+
 
 Credits
 --------
