@@ -6,6 +6,45 @@
 			22E2B040121BD02F0042E640 /* DevNest */,
 		);
 	};
+	228C8403121BD30800F930E3 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 228C8404121BD30800F930E3 /* index.html */;
+		name = "index.html: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 386;
+		vrLoc = 779;
+	};
+	228C8404121BD30800F930E3 /* index.html */ = {
+		isa = PBXFileReference;
+		name = index.html;
+		path = "/Users/tim/Desktop/devnest-iphone/www/index.html";
+		sourceTree = "<absolute>";
+	};
+	228C8405121BD30800F930E3 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* DevNest-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/tim/Desktop/devnest-iphone/DevNest-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	228C8406121BD30800F930E3 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* DevNest-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = "/Users/tim/Desktop/devnest-iphone/DevNest-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
 	22E2B040121BD02F0042E640 /* DevNest */ = {
 		isa = PBXExecutable;
 		activeArgIndices = (
@@ -22,6 +61,7 @@
 		dataTipSortType = 0;
 		debuggerPlugin = GDBDebugging;
 		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
 		enableDebugStr = 1;
 		environmentEntries = (
 		);
@@ -48,16 +88,44 @@
 		indexTemplatePath = "";
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = Distribution;
 		activeExecutable = 22E2B040121BD02F0042E640 /* DevNest */;
+		activeSDKPreference = iphoneos4.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* DevNest */;
 		codeSenseManager = 22E2B089121BD04D0042E640 /* Code sense */;
 		executables = (
 			22E2B040121BD02F0042E640 /* DevNest */,
 		);
 		perUserDictionary = {
-			PBXPerProjectTemplateStateSaveDate = 303812655;
-			PBXWorkspaceStateSaveDate = 303812655;
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					341,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 303813305;
+			PBXWorkspaceStateSaveDate = 303813305;
+		};
+		perUserProjectItems = {
+			228C8403121BD30800F930E3 /* PBXTextBookmark */ = 228C8403121BD30800F930E3 /* PBXTextBookmark */;
+			228C8405121BD30800F930E3 /* PlistBookmark */ = 228C8405121BD30800F930E3 /* PlistBookmark */;
+			228C8406121BD30800F930E3 /* PlistBookmark */ = 228C8406121BD30800F930E3 /* PlistBookmark */;
 		};
 		sourceControlManager = 22E2B088121BD04D0042E640 /* Source Control */;
 		userBuildSettings = {
