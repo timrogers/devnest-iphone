@@ -42,9 +42,9 @@ $('body > *').css({minHeight: '1004px !important'});
 		
 	});
 	
-			$.getJSON('http://search.twitter.com/search.json?q=+from%3Adevnest&rpp=10', function(data) {
-			$.each(data.results, function(i, item) {
-				$("#atdevnest").append("<ul class='rounded'><li class='normal'>" + item.text + "</li></ul>")
+			$.getJSON('http://twitter.com/statuses/user_timeline/20364096.json', function(data) {
+			$.each(data, function(i, item) {
+				$("#atdevnest").append("<ul class='rounded'><li class='normal'>" + item.text + "</li></ul>");
 			});
 			});
 	
@@ -55,6 +55,10 @@ $('body > *').css({minHeight: '1004px !important'});
 				$("#hashdevnest").append("<ul class='rounded'><li class='normal' style='font-weight: bold;'><img src='" + item.profile_image_url + "' class='icon' width='32' height='32' /></a>" + item.from_user + "</li><li class='normal'>" + item.text + "</li></ul>")
 			});
 			}); 
+			
+	$("a.alert").tap(function() {
+		navigator.notification.alert("You may only see a very small number of tweets here due to ongoing problems with the Twitter API. This will hopefully be fixed in due course.", "#devnest", "OK");
+	});
 	
 
 			
@@ -80,7 +84,7 @@ $('body > *').css({minHeight: '1004px !important'});
 		
 
 		<ul id="links">
-			<li class="normal arrow"><a href="#hashdevnest"><img src="twitter.png" class="icon" align="absmiddle" />#devnest</a></li>
+			<li class="normal arrow"><a href="#hashdevnest" class="alert"><img src="twitter.png" class="icon" align="absmiddle" />#devnest</a></li>
 			<li class="normal arrow"><a href="#atdevnest"><img src="twitter.png" class="icon" align="absmiddle" />@devnest</a></li>
 			<li class="normal arrow"><a id="sitelink" rel="external" href="http://www.twitterdevelopernest.com"><img src="Browser_safari.png" class="icon" valign="middle" />Twitter Developer Nest</a></li>
 		</ul>
@@ -92,9 +96,10 @@ $('body > *').css({minHeight: '1004px !important'});
 			<a class="button back blueButton" href="#home">Close</a>
 		</div>
 		<ul class="rounded">
-			<li class="normal title center">@devnest for iPhone</li>
+			<li class="normal title center">DevNest</li>
 			<li class="normal center arrow"><a href="http://www.tim-rogers.co.uk">by Tim Rogers</a></li>
 			<li class="normal center">With thanks to @nuxnix for all his help with the release of this application</li>
+			<li class="normal center title arrow"><a href="http://www.github.com/timrogers/devnest-iphone">View the source code</a></li>
 			
 		</ul>
 		<ul class="rounded">

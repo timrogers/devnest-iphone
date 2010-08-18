@@ -1,0 +1,66 @@
+// !$*UTF8*$!
+{
+	1D6058900D05DD3D006BFB54 /* DevNest */ = {
+		activeExec = 0;
+		executables = (
+			22E2B040121BD02F0042E640 /* DevNest */,
+		);
+	};
+	22E2B040121BD02F0042E640 /* DevNest */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = DevNest;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	22E2B088121BD04D0042E640 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	22E2B089121BD04D0042E640 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 22E2B040121BD02F0042E640 /* DevNest */;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* DevNest */;
+		codeSenseManager = 22E2B089121BD04D0042E640 /* Code sense */;
+		executables = (
+			22E2B040121BD02F0042E640 /* DevNest */,
+		);
+		perUserDictionary = {
+			PBXPerProjectTemplateStateSaveDate = 303812655;
+			PBXWorkspaceStateSaveDate = 303812655;
+		};
+		sourceControlManager = 22E2B088121BD04D0042E640 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+}

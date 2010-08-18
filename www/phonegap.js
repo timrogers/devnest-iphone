@@ -1,3 +1,65 @@
+/* Helper code to resolve anonymous callback functions,
+
+If the function callback can be resolved by name it is returned unaltered.
+If the function is defined in an unknown scope and can't be resolved, an internal reference to the function is added to the internal map.
+
+Callbacks added to the map are one time use only, they will be deleted once called.  
+
+example 1:
+
+function myCallback(){};
+
+fString = GetFunctionName(myCallback);
+
+- result, the function is defined in the global scope, and will be returned as is because it can be resolved by name.
+
+example 2:
+
+fString = GetFunctionName(function(){};);
+
+- result, the function is defined in place, so it will be returned unchanged.
+
+example 3:
+
+function myMethod()
+{
+    var funk = function(){};
+    fString = GetFunctionName(funk);
+}
+
+- result, the function CANNOT be resolved by name, so an internal reference wrapper is created and returned.
+
+
+*/
+
+
+var _anomFunkMap = {};
+var _anomFunkMapNextId = 0; 
+
+function anomToNameFunk(fun)
+{
+	var funkId = "f" + _anomFunkMapNextId++;
+	var funk = function()
+	{
+		fun.apply(this,arguments);
+		_anomFunkMap[funkId] = null;
+		delete _anomFunkMap[funkId];	
+	}
+	_anomFunkMap[funkId] = funk;
+
+	return "_anomFunkMap." + funkId;
+}
+
+function GetFunctionName(fn)
+{
+  if (fn) 
+  {
+      var m = fn.toString().match(/^\s*function\s+([^\s\(]+)/);
+      return m ? m[1] : anomToNameFunk(fn);
+  } else {
+    return null;
+  }
+}
 if (typeof(DeviceInfo) != 'object')
     DeviceInfo = {};
 
@@ -243,16 +305,7 @@ Accelerometer.prototype.clearWatch = function(watchId) {
 PhoneGap.addConstructor(function() {
     if (typeof navigator.accelerometer == "undefined") navigator.accelerometer = new Accelerometer();
 });
-// Gets the function name of a Function object, else uses "alert" if anonymous
-function GetFunctionName(fn)
-{
-  if (fn) {
-      var m = fn.toString().match(/^\s*function\s+([^\s\(]+)/);
-      return m ? m[1] : "alert";
-  } else {
-    return null;
-  }
-}
+
 
 /**
  * This class provides access to the device camera.
@@ -275,16 +328,7 @@ Camera.prototype.getPicture = function(successCallback, errorCallback, options) 
 PhoneGap.addConstructor(function() {
     if (typeof navigator.camera == "undefined") navigator.camera = new Camera();
 });
-// Gets the function name of a Function object, else uses "alert" if anonymous
-function GetFunctionName(fn)
-{
-  if (fn) {
-      var m = fn.toString().match(/^\s*function\s+([^\s\(]+)/);
-      return m ? m[1] : "alert";
-  } else {
-    return null;
-  }
-}
+
 
 /**
  * This class provides access to the device contacts.
@@ -729,6 +773,32 @@ function Geolocation() {
  * getting the position data.
  * @param {PositionOptions} options The options for getting the position data
  * such as timeout.
+ * PositionOptions.forcePrompt:Bool default false, 
+ * - tells iPhone to prompt the user to turn on location services.
+ * - may cause your app to exit while the user is sent to the Settings app
+ * PositionOptions.distanceFilter:double aka Number
+ * - used to represent a distance in meters.
+PositionOptions
+{
+   desiredAccuracy:Number
+   - a distance in meters 
+		< 10   = best accuracy  ( Default value )
+		< 100  = Nearest Ten Meters
+		< 1000 = Nearest Hundred Meters
+		< 3000 = Accuracy Kilometers
+		3000+  = Accuracy 3 Kilometers
+		
+	forcePrompt:Boolean default false ( iPhone Only! )
+    - tells iPhone to prompt the user to turn on location services.
+	- may cause your app to exit while the user is sent to the Settings app
+	
+	distanceFilter:Number
+	- The minimum distance (measured in meters) a device must move laterally before an update event is generated.
+	- measured relative to the previously delivered location
+	- default value: null ( all movements will be reported )
+	
+}
+
  */
 Geolocation.prototype.getCurrentPosition = function(successCallback, errorCallback, options) 
 {
@@ -739,7 +809,6 @@ Geolocation.prototype.getCurrentPosition = function(successCallback, errorCallba
 		if(typeof(errorCallback) == 'function')
 		{
 			errorCallback.call(null,this.lastError);
-			
 		}
 		this.stop();
 		return;
@@ -747,10 +816,10 @@ Geolocation.prototype.getCurrentPosition = function(successCallback, errorCallba
 
 	this.start(options);
 
-    var timeout = 20000; // defaults
-    var interval = 500;
+    var timeout = 30000; // defaults
+    var interval = 2000;
 	
-    if (typeof(options) == 'object' && options.interval)
+    if (options && options.interval)
         interval = options.interval;
 
     if (typeof(successCallback) != 'function')
@@ -760,26 +829,27 @@ Geolocation.prototype.getCurrentPosition = function(successCallback, errorCallba
 
     var dis = this;
     var delay = 0;
-    var timer = setInterval(function() {
-        delay += interval;
-
-        if (typeof(dis.lastPosition) == 'object' && dis.lastPosition.timestamp > referenceTime) 
+	var timer;
+	var onInterval = function()
+	{
+		delay += interval;
+		if(dis.lastPosition != null && dis.lastPosition.timestamp > referenceTime)
 		{
 			clearInterval(timer);
             successCallback(dis.lastPosition);
-            
-        } 
-		else if (delay > timeout) 
+		}
+		else if(delay > timeout)
 		{
 			clearInterval(timer);
             errorCallback("Error Timeout");
-        }
+		}
 		else if(dis.lastError != null)
 		{
 			clearInterval(timer);
 			errorCallback(dis.lastError);
 		}
-    }, interval);
+	}
+    timer = setInterval(onInterval,interval);     
 };
 
 /**
@@ -796,10 +866,8 @@ Geolocation.prototype.watchPosition = function(successCallback, errorCallback, o
 	// determines that the position of the hosting device has changed. 
 	
 	this.getCurrentPosition(successCallback, errorCallback, options);
-	var frequency = 10000;
-        if (typeof(options) == 'object' && options.frequency)
-            frequency = options.frequency;
-	
+	var frequency = (options && options.frequency) ? options.frequency : 10000; // default 10 second refresh
+
 	var that = this;
 	return setInterval(function() 
 	{
@@ -844,7 +912,9 @@ Geolocation.prototype.stop = function() {
     PhoneGap.exec("Location.stopLocation");
 };
 
- // replace origObj's functions ( listed in funkList ) with the same method name on proxyObj
+// replace origObj's functions ( listed in funkList ) with the same method name on proxyObj
+// this is a workaround to prevent UIWebView/MobileSafari default implementation of GeoLocation
+// because it includes the full page path as the title of the alert prompt
 function __proxyObj(origObj,proxyObj,funkList)
 {
     var replaceFunk = function(org,proxy,fName)
@@ -854,7 +924,7 @@ function __proxyObj(origObj,proxyObj,funkList)
            return proxy[fName].apply(proxy,arguments); 
         }; 
     };
-
+	 
     for(var v in funkList) { replaceFunk(origObj,proxyObj,funkList[v]);}
 }
 
@@ -999,7 +1069,7 @@ PhoneGap.addConstructor(function() {
  *
  */
  
-function Media(src, successCallback, errorCallback) {
+function Media(src, successCallback, errorCallback, downloadCompleteCallback) {
 	
 	if (!src) {
 		src = "documents://" + String((new Date()).getTime()).replace(/\D/gi,''); // random
@@ -1007,9 +1077,10 @@ function Media(src, successCallback, errorCallback) {
 	this.src = src;
 	this.successCallback = successCallback;
 	this.errorCallback = errorCallback;	
+	this.downloadCompleteCallback = downloadCompleteCallback;
     
 	if (this.src != null) {
-		PhoneGap.exec("Sound.prepare", this.src, this.successCallback, this.errorCallback);
+		PhoneGap.exec("Sound.prepare", this.src, this.successCallback, this.errorCallback, this.downloadCompleteCallback);
 	}
 }
  
@@ -1062,8 +1133,9 @@ MediaError.MEDIA_ERR_NONE_SUPPORTED = 4;
 /**
  * This class provides access to notifications on the device.
  */
-function Notification() {
-	
+function Notification() 
+{
+
 }
 
 /**
@@ -1090,17 +1162,65 @@ Notification.prototype.beep = function(count, volume) {
  * @param {String} message Message to print in the body of the alert
  * @param {String} [title="Alert"] Title of the alert dialog (default: Alert)
  * @param {String} [buttonLabel="OK"] Label of the close button (default: OK)
+ * @param {String} [cancelLabel="Cancel"] Label ( if callback is provided )
+ * @param {Function} [ callback = null ] allows use as a confirm dialog.
  */
-Notification.prototype.alert = function(message, title, buttonLabel) {
-    var options = {};
-    if (title) options.title = title;
-    if (buttonLabel) options.buttonLabel = buttonLabel;
+Notification.prototype.alert = function(message, title, buttonLabel) 
+{
+	// ? Do we need to add this check in every PhoneGap call ? seems a little over the top
+	// If phonegap is NOT available, seems we have bigger problems then how to show an alert ...
+	// just sayin' -jm
+    if (!PhoneGap.available)
+	{
+		return alert(message); // use the JS alert, no return val
+	}
+	else
+	{
+		var options = {};
+	
+		if (title) 
+			options.title = title;
+		if (buttonLabel) 
+			options.buttonLabel = buttonLabel;
 
-    if (PhoneGap.available)
-        PhoneGap.exec('Notification.alert', message, options);
-    else
-        alert(message);
+		PhoneGap.exec('Notification.alert', message, options);
+		this._alertDelegate = {};
+		return this._alertDelegate;
+	}
 };
+
+
+/**
+ * Open a native alert dialog, with a customizable title and button text.
+ * @param {String} message Message to print in the body of the alert
+ * @param {String} [title="Alert"] Title of the alert dialog (default: Alert)
+ * @param {String} [buttonLabel="OK"] Label of the close button (default: OK)
+ * @param {String} [cancelLabel="Cancel"] Label ( if callback is provided )
+ * Returns a alertDelegate, to catch the return value add your own onAlertDismissed method
+ * onAlertDismissed(index,label) // receives the index + the label of the button the user chose
+ */
+Notification.prototype.confirm = function(message, title, buttonLabels) 
+{
+	// ? Do we need to add this check in every PhoneGap call ? seems a little over the top
+	// If phonegap is NOT available, seems we have bigger problems then how to show an alert ...
+	// just sayin' -jm
+    if (!PhoneGap.available)
+	{
+		return confirm(message); // use the JS confirm, return val is result
+	}
+	else
+	{
+		var labels = buttonLabels ? buttonLabels : "OK,Cancel";
+		return this.alert(message, title, labels);
+	}
+};
+
+Notification.prototype._alertCallback = function(index,label)
+{
+	this._alertDelegate.onAlertDismissed(index,label);
+}
+
+
 
 Notification.prototype.activityStart = function() {
     PhoneGap.exec("Notification.activityStart");
@@ -1436,16 +1556,7 @@ UIControls.prototype.setToolBarTitle = function(title) {
 PhoneGap.addConstructor(function() {
     window.uicontrols = new UIControls();
 });
-// Gets the function name of a Function object, else uses "alert" if anonymous
-function GetFunctionName(fn)
-{
-  if (fn) {
-      var m = fn.toString().match(/^\s*function\s+([^\s\(]+)/);
-      return m ? m[1] : "alert";
-  } else {
-    return null;
-  }
-}
+
 
 /**
  * This class contains information about any NetworkStatus.
