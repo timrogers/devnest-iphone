@@ -604,7 +604,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Multizone Limited";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -614,6 +614,7 @@
 					"-Obj-C",
 				);
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2CAF4885-9854-44AB-976B-A6A37AC1FC10";
 				SDKROOT = iphoneos4.0;
 				USER_HEADER_SEARCH_PATHS = "$(PHONEGAPLIB)/Classes";
 			};
@@ -637,7 +638,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tin Rigers (6WLPXMBCA9)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -647,6 +648,7 @@
 					"-Obj-C",
 				);
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6CB839D8-F241-4280-A665-01B6211EC472";
 				SDKROOT = iphoneos4.0;
 				USER_HEADER_SEARCH_PATHS = "$(PHONEGAPLIB)/Classes";
 			};

@@ -37,7 +37,12 @@ wanted to make something and then get it out to the online community to enjoy.
 
 I'd also quite like to see versions of the app for other platforms on which it is not currently available, like WebOS, Blackberry and Symbian. Please feel free to take the HTML assets and compile them with PhoneGap to these platforms and just upload them to the relevant stores!
 
-Plans for Version 1.1
+What's new?
+-----------
+
+Version 1.1 includes a refresh button to update the page, since otherwise it will not update until the application is fully terminated due to how multitasking works.
+
+Plans for Version 1.2
 ----------------------
 
 I'm not really sure where I want to go with this application now since it is meant to be simple and function. I do, however, have a few relevant ideas that I might put in.
